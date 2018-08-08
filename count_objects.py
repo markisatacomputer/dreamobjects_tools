@@ -1,14 +1,20 @@
 #!/usr/local/bin/python
-import doto
+import drob
 from pick import pick
 
-# get user FROM choices
-cluster_options = ['objects-us-west-1', 'objects-us-east-1']
-cluster, index = pick(cluster_options, 'Which Cluster?')
-resource = doto.getResource(cluster)
-options = doto.getBuckets(resource)
-bucket, index_from = pick(options, 'Which Bucket?')
+parser = drob.getArgParser('Count all objects from a bucket.')
+args = parser.parse_args()
 
-all_objects = doto.getObjectKeys(resource, bucket)
+# get user region choice
+connection = drob.getResource(args.region)
 
-print(cluster + ' bucket ' + bucket + ': ' + len(all_objects) + ' objects')
+# get user bucket choice
+if args.bucket is not None:
+  bucket = args.bucket
+else:
+  options = drob.getBuckets(resource)
+  bucket, index_from = pick(options, 'Which Bucket?')
+
+all_objects = drob.getObjectKeys(resource, bucket)
+
+print(region + ' bucket ' + bucket + ': ' + str(len(all_objects)) + ' objects')

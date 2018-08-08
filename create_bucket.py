@@ -1,13 +1,21 @@
 #!/usr/local/bin/python
 import sys
 import re
-from init import init
+import drob
 
-connection = init()
+parser = drob.getArgParser('Create a new bucket and then delete the bucket itself.')
+args = parser.parse_args()
 
-# make sure
-sys.stdout.write('What do you want to name your new bucket? [a-z_]\n')
-bucket_name = input('---> ').lower()
+# get user region choice
+connection = drob.getResource(args.region)
+
+# get user bucket choice
+if args.bucket is not None:
+  bucket_name = args.bucket
+else:
+  # make sure
+  sys.stdout.write('What do you want to name your new bucket? [a-z_]\n')
+  bucket_name = input('---> ').lower()
 
 # test format
 pattern = re.compile("^[a-z0-9_\.]+$")
