@@ -6,7 +6,7 @@ parser = drob.getArgParser('Count all objects from a bucket.')
 args = parser.parse_args()
 
 # get user region choice
-connection = drob.getResource(args.region)
+resource = drob.getS3Resource(args.region)
 
 # get user bucket choice
 if args.bucket is not None:

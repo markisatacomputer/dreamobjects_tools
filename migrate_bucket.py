@@ -1,4 +1,8 @@
 #!/usr/local/bin/python
+#
+#   NOTE:  This approach only works when migrating within the same region
+#
+#
 import sys
 import drob
 from pick import pick
@@ -14,7 +18,7 @@ if args.region_from is not None:
   region_from = args.region_from
 else:
   region_from, index_from = pick(region_options, 'Which region are you migrating from?')
-resource_from = drob.getResource(region_from)
+resource_from = drob.getS3Resource(region_from)
 if args.bucket_from is not None:
   bucket_from = args.bucket_from
 else:
@@ -29,7 +33,7 @@ else:
 if region_to is region_from:
   resource_to = resource_from
 else:
-  resource_to = drob.getResource(region_to)
+  resource_to = drob.getS3Resource(region_to)
 if args.bucket is not None:
   bucket_to = args.bucket
 else:

@@ -7,7 +7,7 @@ parser = drob.getArgParser('Create a new bucket and then delete the bucket itsel
 args = parser.parse_args()
 
 # get user region choice
-connection = drob.getResource(args.region)
+connection = drob.getS3Resource(args.region)
 
 # get user bucket choice
 if args.bucket is not None:
